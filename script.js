@@ -7,3 +7,7 @@ function add(firstNumber, secondNumber) {
 function subtract(firstNumber, secondNumber) {
     return firstNumber - secondNumber;
 };
+
+function multiply(firstNumber, secondNumber) {
+    return firstNumber * secondNumber;
+};

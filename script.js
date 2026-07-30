@@ -16,4 +16,8 @@ function divide(dividend, divisor) {
     return dividend / divisor;
 }
 
-console.log(divide(50, 8));
+// A calculator operation will consist of a number, an operator, and another number
+let firstPositionNumber = 0;
+let secondPositionNumber = 0;
+let operator = "";
+

@@ -29,15 +29,30 @@ function operate(operator, firstNum, secondNum) {
     };
 };
 
+function getResult() {
+    const result = operate(calculationOperator, +firstNumberPosition, +secondNumberPosition);
+
+    reset();
+    updateDisplay(result, currentPosition);
+};
+
+function reset() {
+    firstNumberPosition = " ";
+    secondNumberPosition = " ";
+    calculationOperator = " ";
+    currentPosition = 1;
+
+    updateDisplay(firstNumberPosition, currentPosition);
+};
+
 // A calculator operation will consist of a number, an operator, and another number
 let firstNumberPosition = " ";
 let secondNumberPosition = " ";
 let calculationOperator = " ";
 let currentPosition = 1;
 
-function updateDisplay(number, position, operator) {
+function updateDisplay(number, position) {
     const calculatorDisplay = document. querySelector(".display");
-    let outputText;
 
     if (position === 1) {
         if (firstNumberPosition === " ") {
@@ -55,7 +70,6 @@ function updateDisplay(number, position, operator) {
     }
 
     calculatorDisplay.innerText = `${firstNumberPosition} ${calculationOperator} ${secondNumberPosition}`; 
-    console.log(calculatorDisplay.innerText);
 };
 
 const numberButtons = document.querySelectorAll(".number-btn");
@@ -64,7 +78,7 @@ for (let button of numberButtons) {
         const target = event.target;
         const textNumberButton = target.innerText;
 
-        updateDisplay(textNumberButton, currentPosition, calculationOperator);
+        updateDisplay(textNumberButton, currentPosition);
     });
 };
 
@@ -73,12 +87,34 @@ for (let button of operatorButtons) {
     button.addEventListener("click", (btn) => {
         const target = event.target;
         const textOperatorButton = target.innerText;
-        
-        if (firstNumberPosition !== " ") {
-            calculationOperator = textOperatorButton;
-            updateDisplay(0, 3, calculationOperator);
 
+        function getOperationUpdate(textOperator) {
+            calculationOperator = textOperator;
+
+            updateDisplay(0, 3);
             currentPosition = 2;
-        }
+        };
+
+        if (secondNumberPosition !== " ") {
+            getResult();
+            getOperationUpdate(textOperatorButton);
+        };
+
+        if (firstNumberPosition !== " ") {
+            getOperationUpdate(textOperatorButton);
+        };
     });
 };
+
+const equalButton = document.querySelector(".equal-btn");
+equalButton.addEventListener("click", (btn) => {
+    if (secondNumberPosition !== " ") {
+        getResult();
+    }
+
+});
+
+const clearButton = document.querySelector(".clear-btn");
+clearButton.addEventListener("click", (btn) => {
+    reset();
+})

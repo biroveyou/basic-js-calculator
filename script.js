@@ -62,7 +62,20 @@ const Display = {
     getResult: () => {
         let firstNumber = +Display.firstPosition;
         let secondNumber = +Display.secondPosition;
-        const result = Calculator.operate(Display.expressionOperator, firstNumber, secondNumber);
+        
+        let result = Calculator.operate(Display.expressionOperator, firstNumber, secondNumber);
+
+        if (Number.isNaN(result)) {
+            alert("Operation Invalid");
+            Display.reset();
+            return;
+        }
+        if (!Number.isInteger(result)) {
+            const strResult = String(result);
+            if ((strResult.slice(strResult.split("").findIndex((e) => e === ".")).length - 1) > 6) {
+                result = result.toFixed(6);
+            }
+        };
 
         Display.reset();
         Display.update(result, Display.currentPosition);

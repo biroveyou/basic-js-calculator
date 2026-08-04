@@ -1,36 +1,38 @@
 "use strict";
 
-function add(firstNumber, secondNumber) {
-    return firstNumber + secondNumber;
-};
+const Calculator = {
+    add: (firstAddend, secondAddend) => {
+        return firstAddend + secondAddend;
+    },
 
-function subtract(minuend, subtrahend) {
-    return minuend - subtrahend;
-};
+    subtract: (minuend, subtrahend) => {
+        return minuend - subtrahend;
+    },
 
-function multiply(firstNumber, secondNumber) {
-    return firstNumber * secondNumber;
-};
+    multiply: (firstFactor, secondFactor) => {
+        return firstFactor * secondFactor;
+    },
 
-function divide(dividend, divisor) {
-    return dividend / divisor;
-};
+    divide: (dividend, divisor) => {
+        return dividend / divisor;
+    },
 
-function operate(operator, firstNum, secondNum) {
-    switch (operator) {
-        case "+":
-            return add(firstNum, secondNum);
-        case "-":
-            return subtract(firstNum, secondNum);
-        case "x":
-            return multiply(firstNum, secondNum);
-        case "÷":
-            return divide(firstNum, secondNum);
-    };
-};
+    operate: (operator, firstNum, secondNum) => {
+        switch (operator) {
+            case "+":
+                return Calculator.add(firstNum, secondNum);
+            case "-":
+                return Calculator.subtract(firstNum, secondNum);
+            case "x":
+                return Calculator.multiply(firstNum, secondNum);
+            case "÷":
+                return Calculator.divide(firstNum, secondNum);
+        };
+    },
+}
 
 function getResult() {
-    const result = operate(calculationOperator, +firstNumberPosition, +secondNumberPosition);
+    const result = Calculator.operate(calculationOperator, +firstNumberPosition, +secondNumberPosition);
 
     reset();
     updateDisplay(result, currentPosition);

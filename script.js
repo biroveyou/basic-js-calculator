@@ -36,45 +36,46 @@ const Display = {
         const calculatorDisplay = document. querySelector(".display");
 
         if (position === 1) {
-            if (firstNumberPosition === " ") {
-                firstNumberPosition = number;
+            if (Display.firstPosition === " ") {
+                Display.firstPosition = number;
             } else {
-                firstNumberPosition += number
+                Display.firstPosition += number;
             }
         }
         if (position === 2) {
-            if (secondNumberPosition === " ") {
-                secondNumberPosition = number;
+            if (Display.secondPosition === " ") {
+                Display.secondPosition = number;
             } else {
-                secondNumberPosition += number
+                Display.secondPosition += number;
             }
         }
 
-        calculatorDisplay.innerText = `${firstNumberPosition} ${calculationOperator} ${secondNumberPosition}`; 
+        calculatorDisplay.innerText = `${Display.firstPosition} ${Display.expressionOperator} ${Display.secondPosition}`; 
     },
 
     reset: () => {
-        firstNumberPosition = " ";
-        secondNumberPosition = " ";
-        calculationOperator = " ";
-        currentPosition = 1;
+        Display.firstPosition = " ";
+        Display.secondPosition = " ";
+        Display.expressionOperator = " ";
+        Display.currentPosition = 1;
 
-        Display.update(firstNumberPosition, currentPosition);
+        Display.update(Display.firstPosition, Display.currentPosition);
     },
 
     getResult: () => {
-        const result = Calculator.operate(calculationOperator, +firstNumberPosition, +secondNumberPosition);
+        const result = Calculator.operate(Display.expressionOperator, +Display.firstPosition, +Display.secondPosition);
 
         Display.reset();
-        Display.update(result, currentPosition);
+        Display.update(result, Display.currentPosition);
     },
-}
 
-// A calculator operation will consist of a number, an operator, and another number
-let firstNumberPosition = " ";
-let secondNumberPosition = " ";
-let calculationOperator = " ";
-let currentPosition = 1;
+    // A calculator operation will consist of a number, an operator, and another number
+    firstPosition: " ",
+    secondPosition: " ",
+    currentPosition: 1,
+    expressionOperator: " ",
+
+}
 
 const numberButtons = document.querySelectorAll(".number-btn");
 for (let button of numberButtons) {
@@ -82,7 +83,7 @@ for (let button of numberButtons) {
         const target = event.target;
         const textNumberButton = target.innerText;
 
-        Display.update(textNumberButton, currentPosition);
+        Display.update(textNumberButton, Display.currentPosition);
     });
 };
 
@@ -92,33 +93,32 @@ for (let button of operatorButtons) {
         const target = event.target;
         const textOperatorButton = target.innerText;
 
-        function getOperationUpdate(textOperator) {
-            calculationOperator = textOperator;
+        function updateOperation(textOperator) {
+            Display.expressionOperator = textOperator;
 
             Display.update(0, 3);
-            currentPosition = 2;
+            Display.currentPosition = 2;
         };
 
-        if (secondNumberPosition !== " ") {
+        if (Display.secondPosition !== " ") {
             Display.getResult();
-            getOperationUpdate(textOperatorButton);
+            updateOperation(textOperatorButton);
         };
 
-        if (firstNumberPosition !== " ") {
-            getOperationUpdate(textOperatorButton);
+        if (Display.firstPosition !== " ") {
+            updateOperation(textOperatorButton);
         };
     });
 };
 
 const equalButton = document.querySelector(".equal-btn");
 equalButton.addEventListener("click", (btn) => {
-    if (secondNumberPosition !== " ") {
+    if (Display.secondPosition !== " ") {
         Display.getResult();
-    }
-
+    };
 });
 
 const clearButton = document.querySelector(".clear-btn");
 clearButton.addEventListener("click", (btn) => {
     Display.reset();
-})
+});

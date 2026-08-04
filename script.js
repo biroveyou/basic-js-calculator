@@ -54,16 +54,15 @@ const Display = {
     },
 
     reset: () => {
-        Display.firstPosition = " ";
-        Display.secondPosition = " ";
-        Display.expressionOperator = " ";
-        Display.currentPosition = 1;
-
+        [Display.firstPosition, Display.secondPosition, Display.expressionOperator] = [" ", " ", " "]
+        Display.currentPosition = 1;        
         Display.update(Display.firstPosition, Display.currentPosition);
     },
 
     getResult: () => {
-        const result = Calculator.operate(Display.expressionOperator, +Display.firstPosition, +Display.secondPosition);
+        let firstNumber = +Display.firstPosition;
+        let secondNumber = +Display.secondPosition;
+        const result = Calculator.operate(Display.expressionOperator, firstNumber, secondNumber);
 
         Display.reset();
         Display.update(result, Display.currentPosition);

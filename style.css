@@ -1,0 +1,32 @@
+.calculator {
+    display: flex;
+    flex-direction: column;
+
+    padding: 16px;
+    
+    width: 200px;
+    height: 300px;
+}
+
+.display {
+    width: auto;
+    height: 40px;
+}
+
+.btn {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 40px;
+    border: 0;
+
+    text-align: center;
+}
+
+.middle-section {
+    display: flex;
+}
+
+.action-row {
+    flex-grow: 0;
+}

@@ -29,23 +29,46 @@ const Calculator = {
                 return Calculator.divide(firstNum, secondNum);
         };
     },
+};
+
+const Display = {
+    update: (number, position) => {
+        const calculatorDisplay = document. querySelector(".display");
+
+        if (position === 1) {
+            if (firstNumberPosition === " ") {
+                firstNumberPosition = number;
+            } else {
+                firstNumberPosition += number
+            }
+        }
+        if (position === 2) {
+            if (secondNumberPosition === " ") {
+                secondNumberPosition = number;
+            } else {
+                secondNumberPosition += number
+            }
+        }
+
+        calculatorDisplay.innerText = `${firstNumberPosition} ${calculationOperator} ${secondNumberPosition}`; 
+    },
+
+    reset: () => {
+        firstNumberPosition = " ";
+        secondNumberPosition = " ";
+        calculationOperator = " ";
+        currentPosition = 1;
+
+        Display.update(firstNumberPosition, currentPosition);
+    },
+
+    getResult: () => {
+        const result = Calculator.operate(calculationOperator, +firstNumberPosition, +secondNumberPosition);
+
+        Display.reset();
+        Display.update(result, currentPosition);
+    },
 }
-
-function getResult() {
-    const result = Calculator.operate(calculationOperator, +firstNumberPosition, +secondNumberPosition);
-
-    reset();
-    updateDisplay(result, currentPosition);
-};
-
-function reset() {
-    firstNumberPosition = " ";
-    secondNumberPosition = " ";
-    calculationOperator = " ";
-    currentPosition = 1;
-
-    updateDisplay(firstNumberPosition, currentPosition);
-};
 
 // A calculator operation will consist of a number, an operator, and another number
 let firstNumberPosition = " ";
@@ -53,34 +76,13 @@ let secondNumberPosition = " ";
 let calculationOperator = " ";
 let currentPosition = 1;
 
-function updateDisplay(number, position) {
-    const calculatorDisplay = document. querySelector(".display");
-
-    if (position === 1) {
-        if (firstNumberPosition === " ") {
-            firstNumberPosition = number;
-        } else {
-            firstNumberPosition += number
-        }
-    }
-    if (position === 2) {
-        if (secondNumberPosition === " ") {
-            secondNumberPosition = number;
-        } else {
-            secondNumberPosition += number
-        }
-    }
-
-    calculatorDisplay.innerText = `${firstNumberPosition} ${calculationOperator} ${secondNumberPosition}`; 
-};
-
 const numberButtons = document.querySelectorAll(".number-btn");
 for (let button of numberButtons) {
     button.addEventListener("click", (btn) => {
         const target = event.target;
         const textNumberButton = target.innerText;
 
-        updateDisplay(textNumberButton, currentPosition);
+        Display.update(textNumberButton, currentPosition);
     });
 };
 
@@ -93,12 +95,12 @@ for (let button of operatorButtons) {
         function getOperationUpdate(textOperator) {
             calculationOperator = textOperator;
 
-            updateDisplay(0, 3);
+            Display.update(0, 3);
             currentPosition = 2;
         };
 
         if (secondNumberPosition !== " ") {
-            getResult();
+            Display.getResult();
             getOperationUpdate(textOperatorButton);
         };
 
@@ -111,12 +113,12 @@ for (let button of operatorButtons) {
 const equalButton = document.querySelector(".equal-btn");
 equalButton.addEventListener("click", (btn) => {
     if (secondNumberPosition !== " ") {
-        getResult();
+        Display.getResult();
     }
 
 });
 
 const clearButton = document.querySelector(".clear-btn");
 clearButton.addEventListener("click", (btn) => {
-    reset();
+    Display.reset();
 })

@@ -29,6 +29,8 @@ const Calculator = {
                 return Calculator.divide(firstNum, secondNum);
         };
     },
+
+    isResult: false,
 };
 
 const Display = {
@@ -36,8 +38,9 @@ const Display = {
         const calculatorDisplay = document. querySelector(".display");
 
         if (position === 1) {
-            if (Display.firstPosition === " ") {
+            if (Display.firstPosition === " " || Calculator.isResult) {
                 Display.firstPosition = number;
+                Calculator.isResult = false;
             } else {
                 Display.firstPosition += number;
             }
@@ -48,6 +51,11 @@ const Display = {
             } else {
                 Display.secondPosition += number;
             }
+        }
+        if (position === 3) {
+            Display.firstPosition = number;
+            Display.currentPosition = 1;
+            Calculator.isResult = true;
         }
 
         calculatorDisplay.innerText = `${Display.firstPosition} ${Display.expressionOperator} ${Display.secondPosition}`; 
@@ -78,6 +86,7 @@ const Display = {
         };
 
         Display.reset();
+        Display.currentPosition = 3;
         Display.update(result, Display.currentPosition);
     },
 
@@ -108,7 +117,7 @@ for (let button of operatorButtons) {
         function updateOperation(textOperator) {
             Display.expressionOperator = textOperator;
 
-            Display.update(0, 3);
+            Display.update(0, 4);
             Display.currentPosition = 2;
         };
 

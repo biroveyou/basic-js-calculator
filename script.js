@@ -21,9 +21,9 @@ const Calculator = {
         switch (operator) {
             case "+":
                 return Calculator.add(firstNum, secondNum);
-            case "-":
+            case "−":
                 return Calculator.subtract(firstNum, secondNum);
-            case "x":
+            case "×":
                 return Calculator.multiply(firstNum, secondNum);
             case "÷":
                 return Calculator.divide(firstNum, secondNum);

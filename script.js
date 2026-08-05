@@ -35,8 +35,6 @@ const Calculator = {
 
 const Display = {
     update: (number, position) => {
-        const calculatorDisplay = document. querySelector(".display");
-
         if (position === 1) {
             if (Display.firstPosition === " " || Calculator.isResult) {
                 Display.firstPosition = number;
@@ -98,13 +96,19 @@ const Display = {
 
 }
 
+const calculatorDisplay = document. querySelector(".display");
+
 const numberButtons = document.querySelectorAll(".number-btn");
 for (let button of numberButtons) {
     button.addEventListener("click", (btn) => {
         const target = event.target;
         const textNumberButton = target.innerText;
 
-        Display.update(textNumberButton, Display.currentPosition);
+        if (calculatorDisplay.innerText.length > 8) {
+            return;
+        } else {
+            Display.update(textNumberButton, Display.currentPosition);
+        };
     });
 };
 
